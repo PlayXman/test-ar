@@ -1,0 +1,12 @@
+{
+  "name": "test-ar",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PlayXman/test-ar.git"
+  },
+  "dependencies": {
+    "ar.js": "2.2.2",
+    "aframe": "1.0.4"
+  }
+}
