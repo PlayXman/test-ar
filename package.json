@@ -5,8 +5,14 @@
     "type": "git",
     "url": "git+https://github.com/PlayXman/test-ar.git"
   },
+  "scripts": {
+    "serve": "node browsersync.js"
+  },
   "dependencies": {
     "ar.js": "2.2.2",
     "aframe": "1.0.4"
+  },
+  "devDependencies": {
+    "browser-sync": "2.26.7"
   }
 }
