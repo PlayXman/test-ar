@@ -6,13 +6,18 @@
     "url": "git+https://github.com/PlayXman/test-ar.git"
   },
   "scripts": {
-    "serve": "node browsersync.js"
+    "start": "webpack-dev-server",
+    "build": "webpack --mode production"
   },
   "dependencies": {
-    "ar.js": "2.2.2",
-    "aframe": "1.0.4"
+    "three": "^0.115.0"
   },
   "devDependencies": {
-    "browser-sync": "2.26.7"
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
+    "@babel/preset-env": "^7.9.5",
+    "babel-loader": "^8.1.0",
+    "@babel/core": "^7.9.0"
   }
 }
