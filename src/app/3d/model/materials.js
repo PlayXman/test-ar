@@ -6,3 +6,11 @@ export function defaultMat() {
         color: config.model.color
     });
 }
+
+export function editMat() {
+    return new MeshPhysicalMaterial({
+        color: config.model.color,
+        transparent: true,
+        opacity: 0.2
+    });
+}
