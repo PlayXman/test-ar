@@ -26,6 +26,21 @@ class Storage {
         obj.visible = true;
     }
 
+    /**
+     * @param {function(x:number, y:number, z:number, box:BoxMesh)} callback
+     */
+    iterateAllBoxes(callback) {
+        const l = this.boxMatrix.length;
+
+        for (let x = 0; x < l; x++) {
+            for (let y = 0; y < l; y++) {
+                for (let z = 0; z < l; z++) {
+                    callback(x, y, z, this.boxMatrix[x][y][z]);
+                }
+            }
+        }
+    }
+
     _initBoxMatrix() {
         const matrixLength = config.scene.matrix;
         const mi = this._middleIndex;
@@ -57,27 +72,9 @@ class Storage {
     _createBox(x, y, z) {
         const box = createBox();
         box.visible = false;
-        box.position.x = x;
-        box.position.y = y;
-        box.position.z = z;
+        box.position.set(x, y, z);
 
         return box;
-    }
-
-    /**
-     * @param {function(x:number, y:number, z:number)} callback
-     * @private
-     */
-    _iterateMatrix(callback) {
-        const l = this.boxMatrix.length;
-
-        for (let x = 0; x < l; x++) {
-            for (let y = 0; y < l; y++) {
-                for (let z = 0; z < l; z++) {
-                    callback(x, y, z);
-                }
-            }
-        }
     }
 
 }

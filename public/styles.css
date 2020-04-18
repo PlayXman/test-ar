@@ -1,0 +1,38 @@
+html, body {
+    margin: 0;
+}
+
+body {
+    position: relative;
+}
+
+canvas {
+    display: block;
+}
+
+.layout {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.layout__button {
+    position: absolute;
+    display: block;
+    bottom: 0;
+    margin: 1em;
+    width: 4em;
+    height: 4em;
+    border-radius: 50%;
+    border: 1px solid black;
+    background: #c6c6c6;
+    pointer-events: auto;
+}
+
+.layout__button--active {
+    background: #686868;
+    color: #ffffff;
+}
