@@ -57,7 +57,39 @@ class Sculpture {
     }
 
     startRemoveEditMode() {
-        //todo
+        const raycaster = new Raycaster();
+        let moved;
+        this.listeners.add('document', 'mousedown', () => {
+            moved = false;
+        });
+        this.listeners.add('document', 'mousemove', () => {
+            moved = true;
+        });
+        this.listeners.add('document', 'mouseup', (e) => {
+            e.preventDefault();
+
+            if (!moved) {
+                const mouse = new Vector2(
+                    (e.clientX / window.innerWidth) * 2 - 1,
+                    -(e.clientY / window.innerHeight) * 2 + 1
+                )
+
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(this.space.scene.children);
+                for (let i = 0; i < intersects.length; i++) {
+                    const obj = intersects[i].object;
+                    if (obj.visible && obj.custom && obj.custom.active) {
+                        this.structure.remove(obj);
+                        break;
+                    }
+                }
+            }
+        });
+
+    }
+
+    stopRemoveEditMode() {
+        this.listeners.removeAll('document');
     }
 
     _setEditModeAroundBox = (activeBox) => {

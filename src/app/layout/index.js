@@ -7,17 +7,17 @@ class Layout {
         this.root.classList.add('layout');
     }
 
-    createAddButton(onCb, offCb) {
-        const btn = this._createButton('add', onCb, offCb);
+    createButton(name, onCb, offCb) {
+        const btn = this._makeButton(name, onCb, offCb);
 
-        this._setNewBtn('add', btn);
+        this._setNewBtn(name, btn);
     }
 
     render() {
         return this.root;
     }
 
-    _createButton(name, onCb, offCb) {
+    _makeButton(name, onCb, offCb) {
         const button = document.createElement('button');
         button.classList.add('layout__button');
         button.classList.add('layout__button--' + name);

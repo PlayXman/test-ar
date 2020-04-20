@@ -4,7 +4,7 @@ import {defaultMat, editMat} from "../../3d/model/materials";
 
 class Storage {
 
-    activeBoxes = [];
+    activeBoxes = new Set();
 
     constructor(space) {
         this._space = space;
@@ -17,13 +17,26 @@ class Storage {
         obj.castShadow = true;
         obj.visible = true;
         obj.custom.active = true;
-        this.activeBoxes.push(obj);
+        obj.scale.set(1, 1, 1);
+        this.activeBoxes.add(obj);
     }
 
+    /**
+     * @param {BoxMesh} obj
+     */
     edit(obj) {
         obj.material = editMat();
         obj.castShadow = false;
         obj.visible = true;
+        obj.scale.set(0.6, 0.6, 0.6);
+    }
+
+    remove(obj) {
+        if (this.activeBoxes.size > 1) {
+            obj.visible = false;
+            obj.custom.active = false;
+            this.activeBoxes.delete(obj);
+        }
     }
 
     /**
