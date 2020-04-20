@@ -12,9 +12,12 @@ class Sculpture {
     space = null;
     /** @type {Storage} */
     structure = null;
+    /** @type {HTMLCanvasElement} */
+    canvasElement = null;
 
     constructor(space) {
         this.space = space;
+        this.canvasElement = this.space.renderer.domElement;
         this.structure = new Storage(space);
     }
 
@@ -22,23 +25,21 @@ class Sculpture {
         this.structure.activeBoxes.forEach(this._setEditModeAroundBox);
 
         const raycaster = new Raycaster();
-        let moved;
-        this.listeners.add('document', 'mousedown', () => {
-            moved = false;
-        });
-        this.listeners.add('document', 'mousemove', () => {
-            moved = true;
-        });
-        this.listeners.add('document', 'mouseup', (e) => {
+
+        const handleClick = (e) => {
             e.preventDefault();
 
-            if (!moved) {
-                const mouse = new Vector2(
-                    (e.clientX / window.innerWidth) * 2 - 1,
-                    -(e.clientY / window.innerHeight) * 2 + 1
-                )
+            if (e.which === 1 || e.changedTouches.length) {
+                const pointerPos = {
+                    x: e.clientX !== undefined ? e.clientX : e.changedTouches[0].clientX,
+                    y: e.clientY !== undefined ? e.clientY : e.changedTouches[0].clientY
+                };
+                const pointer = new Vector2(
+                    (pointerPos.x / window.innerWidth) * 2 - 1,
+                    -(pointerPos.y / window.innerHeight) * 2 + 1
+                );
 
-                raycaster.setFromCamera(mouse, camera);
+                raycaster.setFromCamera(pointer, camera);
                 const intersects = raycaster.intersectObjects(this.space.scene.children);
                 for (let i = 0; i < intersects.length; i++) {
                     const obj = intersects[i].object;
@@ -50,7 +51,10 @@ class Sculpture {
                     }
                 }
             }
-        });
+        };
+
+        this.listeners.add(this.canvasElement, 'mouseup', handleClick);
+        this.listeners.add(this.canvasElement, 'touchend', handleClick);
     }
 
     stopAddEditMode() {
@@ -59,28 +63,26 @@ class Sculpture {
                 box.visible = false;
             }
         });
-        this.listeners.removeAll('document');
+        this.listeners.removeAll(this.canvasElement);
     }
 
     startRemoveEditMode() {
         const raycaster = new Raycaster();
-        let moved;
-        this.listeners.add('document', 'mousedown', () => {
-            moved = false;
-        });
-        this.listeners.add('document', 'mousemove', () => {
-            moved = true;
-        });
-        this.listeners.add('document', 'mouseup', (e) => {
+
+        const handleClick = (e) => {
             e.preventDefault();
 
-            if (!moved) {
-                const mouse = new Vector2(
-                    (e.clientX / window.innerWidth) * 2 - 1,
-                    -(e.clientY / window.innerHeight) * 2 + 1
-                )
+            if (e.which === 1 || e.changedTouches.length) {
+                const pointerPos = {
+                    x: e.clientX !== undefined ? e.clientX : e.changedTouches[0].clientX,
+                    y: e.clientY !== undefined ? e.clientY : e.changedTouches[0].clientY
+                };
+                const pointer = new Vector2(
+                    (pointerPos.x / window.innerWidth) * 2 - 1,
+                    -(pointerPos.y / window.innerHeight) * 2 + 1
+                );
 
-                raycaster.setFromCamera(mouse, camera);
+                raycaster.setFromCamera(pointer, camera);
                 const intersects = raycaster.intersectObjects(this.space.scene.children);
                 for (let i = 0; i < intersects.length; i++) {
                     const obj = intersects[i].object;
@@ -91,12 +93,14 @@ class Sculpture {
                     }
                 }
             }
-        });
+        };
 
+        this.listeners.add(this.canvasElement, 'mouseup', handleClick);
+        this.listeners.add(this.canvasElement, 'touchend', handleClick);
     }
 
     stopRemoveEditMode() {
-        this.listeners.removeAll('document');
+        this.listeners.removeAll(this.canvasElement);
     }
 
     _setEditModeAroundBox = (activeBox) => {

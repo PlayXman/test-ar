@@ -1,12 +1,12 @@
 class Listener {
 
     /**
-     * @param {string} to Target element for listener
+     * @param {any} target Target element for listener
      * @param {string} type Type of event
      * @param {function} cb
      */
-    constructor(to, type, cb) {
-        this.el = this._getEl(to);
+    constructor(target, type, cb) {
+        this.el = target;
         this.type = type;
         this.cb = cb;
 
@@ -18,22 +18,6 @@ class Listener {
      */
     remove() {
         this.el.removeEventListener(this.type, this.cb);
-    }
-
-    /**
-     * @param {string} to Target element for listener
-     * @returns {Node|Window|Document}
-     * @private
-     */
-    _getEl(to) {
-        switch (to) {
-            case 'document':
-                return document;
-            case 'window':
-                return window;
-            default:
-                return document.getElementById(to);
-        }
     }
 
 }

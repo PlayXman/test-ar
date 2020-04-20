@@ -1,6 +1,6 @@
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import camera from "./camera";
-import {Vector3} from "three";
+import {MOUSE, TOUCH, Vector3} from "three";
 
 const STEP = 0.5;
 const MIN_DISTANCE = 1.5; //so you can't go inside model (needs a test)
@@ -25,12 +25,21 @@ export class Controls {
      */
     constructor(domElement) {
         this.controls = new OrbitControls(camera, domElement);
+
         this.controls.enableKeys = false;
         this.controls.enablePan = false;
+
         this.controls.maxPolarAngle = (Math.PI / 180) * 120;
+
         this.controls.minDistance = MIN_DISTANCE;
         this.controls.maxDistance = MAX_DISTANCE;
+
         this.controls.target.set(0, 0, 0);
+
+        this.controls.mouseButtons.LEFT = -1;
+        this.controls.mouseButtons.RIGHT = MOUSE.ROTATE;
+        this.controls.touches.ONE = -1;
+        this.controls.touches.TWO = TOUCH.DOLLY_ROTATE;
     }
 
     sizeUp(newObjX, newObjY, newObjZ) {

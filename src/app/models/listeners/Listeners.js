@@ -2,11 +2,11 @@ import Listener from "./Listener";
 
 class Listeners {
 
-    /** @type {Map<string, Listener[]>} */
+    /** @type {Map<any, Listener[]>} */
     listeners = new Map();
 
     /**
-     * @param {string} target to Target element for listener
+     * @param {any} target to Target element for listener
      * @param {string} type type Type of event
      * @param {function} cb
      */
@@ -24,7 +24,7 @@ class Listeners {
 
     /**
      * Removes listeners of some type on targeted element
-     * @param {string} target Target element for listener
+     * @param {any} target Target element for listener
      * @param {string} type Type of event
      */
     remove(target, type) {
@@ -47,7 +47,7 @@ class Listeners {
 
     /**
      * Removes all listeners on targeted element
-     * @param {string} target Target element for listener
+     * @param {any} target Target element for listener
      */
     removeAll(target) {
         this.listeners.get(target).forEach((listener) => {
