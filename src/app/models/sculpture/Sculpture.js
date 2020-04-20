@@ -6,7 +6,12 @@ import Listeners from "../listeners/Listeners";
 
 class Sculpture {
 
+    /** @type {Listeners} */
     listeners = new Listeners();
+    /** @type {Space} */
+    space = null;
+    /** @type {Storage} */
+    structure = null;
 
     constructor(space) {
         this.space = space;
@@ -39,6 +44,7 @@ class Sculpture {
                     const obj = intersects[i].object;
                     if (obj.visible && obj.custom && !obj.custom.active) {
                         this.structure.add(obj);
+                        this.space.controls.sizeUp(obj.position.x, obj.position.y, obj.position.z);
                         this._setEditModeAroundBox(obj);
                         break;
                     }
@@ -80,6 +86,7 @@ class Sculpture {
                     const obj = intersects[i].object;
                     if (obj.visible && obj.custom && obj.custom.active) {
                         this.structure.remove(obj);
+                        this.space.controls.sizeDown(this.structure.activeBoxes);
                         break;
                     }
                 }

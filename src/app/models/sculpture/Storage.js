@@ -2,8 +2,17 @@ import config from "../../config";
 import {createBox} from "../../3d/model/box";
 import {defaultMat, editMat} from "../../3d/model/materials";
 
+const EDIT_SIZE = 0.3;
+
 class Storage {
 
+    /** @type {Space} @private */
+    _space = null;
+    /** @type {number} @private */
+    _middleIndex;
+    /** @type {Array} */
+    boxMatrix = null;
+    /** @type {Set<BoxMesh>} */
     activeBoxes = new Set();
 
     constructor(space) {
@@ -28,7 +37,7 @@ class Storage {
         obj.material = editMat();
         obj.castShadow = false;
         obj.visible = true;
-        obj.scale.set(0.6, 0.6, 0.6);
+        obj.scale.set(EDIT_SIZE, EDIT_SIZE, EDIT_SIZE);
     }
 
     remove(obj) {
